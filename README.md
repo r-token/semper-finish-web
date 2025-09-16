@@ -1,3 +1,3 @@
 # Semper Finish
 
-The website for Semper Finish, LLC. [https://semperfinishllc.com](semperfinishllc.com). Built with Svelte and SST.
+The website for Semper Finish, LLC. Built with Svelte and SST. [semperfinishllc.com](https://semperfinishllc.com)
