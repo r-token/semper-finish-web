@@ -2,7 +2,6 @@
 	import BookingForm from '$lib/BookingForm.svelte';
 </script>
 
-<h1>Semper Finish, LLC</h1>
+<h1>Book With Us</h1>
 
 <BookingForm />
-
