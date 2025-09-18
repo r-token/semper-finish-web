@@ -10,7 +10,7 @@
     { href: '/meet-the-team', label: 'Meet the Team' }
   ];
 
-  let pathname = '';
+  let pathname = $state('');
   let open = $state(false);
 
   // Track route changes and close the mobile menu when navigating
@@ -43,7 +43,7 @@
       aria-label={open ? 'Close menu' : 'Open menu'}
       aria-expanded={open}
       aria-controls="mobile-nav"
-      on:click={toggle}
+      onclick={toggle}
     >
       {#if !open}
         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -61,7 +61,7 @@
   </div>
 
   <!-- Accent brand bar -->
-  <div aria-hidden class="h-1 bg-gradient-to-r from-primary via-gold to-blue"></div>
+  <div aria-hidden="true" class="h-1 bg-gradient-to-r from-primary via-gold to-blue"></div>
 
   <!-- Mobile menu -->
   <div

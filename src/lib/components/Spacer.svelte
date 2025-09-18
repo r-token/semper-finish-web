@@ -8,4 +8,4 @@
   } as const;
 </script>
 
-<div aria-hidden class={cls[size]}></div>
+<div aria-hidden="true" class={cls[size]}></div>

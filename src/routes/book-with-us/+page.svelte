@@ -1,5 +1,6 @@
 <script>
-	import BookingForm from '$lib/BookingForm.svelte';
+	export let form;
+	import BookingForm from '$lib/components/BookingForm.svelte';
   import Section from '$lib/components/Section.svelte';
   import Heading from '$lib/components/Heading.svelte';
   import Spacer from '$lib/components/Spacer.svelte';
@@ -13,5 +14,5 @@
 <Section>
   <Heading title="Book With Us" />
   <Spacer />
-  <BookingForm />
+  <BookingForm {form} />
 </Section>

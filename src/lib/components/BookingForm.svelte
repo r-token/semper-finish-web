@@ -1,11 +1,23 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { fade } from 'svelte/transition';
 	import Field from '$lib/components/Field.svelte';
 	import Grid from '$lib/components/Grid.svelte';
 	import Card from '$lib/components/Card.svelte';
 	import Prose from '$lib/components/Prose.svelte';
 
 	let { form } = $props();
+	let successMessage = $state('');
+	let isSubmitting = $state(false);
+	let formKey = $state('init');
+
+	$effect(() => {
+		if (!successMessage) return;
+		const t = setTimeout(() => {
+			successMessage = '';
+		}, 5000);
+		return () => clearTimeout(t);
+	});
 
 	const inputClass = 'mt-1 w-full rounded-md border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 focus:ring-2 focus:ring-blue focus:border-blue dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus:ring-yellow';
 </script>
@@ -17,10 +29,32 @@
 	</Prose>
 
 	{#if form?.error}
-		<p class="text-sm text-red-600 dark:text-red-400">{form.error}</p>
+		<p class="text-sm text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded p-3" role="alert" aria-live="polite">{form.error}</p>
+	{/if}
+	{#if successMessage}
+		<p class="text-sm text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded p-3" role="status" aria-live="polite" in:fade={{ duration: 150 }} out:fade={{ duration: 250 }}>{successMessage}</p>
 	{/if}
 
-	<form method="POST" use:enhance class="mt-6 space-y-4">
+	{#key formKey}
+	<form method="POST" use:enhance={({ form }) => {
+	isSubmitting = true;
+	successMessage = '';
+		return async ({ result, update }) => {
+			try {
+				// Always propagate server result first so form data reflects cleared state
+				await update(result);
+				if (result.type === 'success') {
+					successMessage = 'Thanks! We received your request and will be in touch shortly.';
+					form.reset();
+					// Force-remount the form to clear any bound inputs
+					formKey = Math.random().toString(36).slice(2);
+				}
+			} finally {
+				// Re-enable the button regardless of outcome
+				isSubmitting = false;
+			}
+		};
+	}} class="mt-6 space-y-4">
 			<Grid class="sm:grid-cols-2">
 				<Field label="First Name">
 					<input
@@ -83,6 +117,13 @@
 				></textarea>
 			</Field>
 
-			<button type="submit" class="bg-primary text-white rounded-md px-4 py-2 shadow-sm hover:brightness-95 transition">Submit</button>
+			<button type="submit" class="bg-primary text-white rounded-md px-4 py-2 shadow-sm hover:brightness-95 transition disabled:opacity-60" disabled={isSubmitting}>
+				{#if isSubmitting}
+					Submitting...
+				{:else}
+					Submit
+				{/if}
+			</button>
 		</form>
+	{/key}
 </Card>

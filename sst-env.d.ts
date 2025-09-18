@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "BookingApi": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
     "semper-finish": {
       "type": "sst.aws.SvelteKit"
       "url": string

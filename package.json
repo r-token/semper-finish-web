@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "sst": "3.17.13",
-    "svelte-kit-sst": "2.43.5"
+    "svelte-kit-sst": "2.43.5",
+    "@aws-sdk/client-sesv2": "^3.629.0"
   }
 }

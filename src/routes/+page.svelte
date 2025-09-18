@@ -1,5 +1,6 @@
 <script>
-	import BookingForm from '$lib/BookingForm.svelte';
+	export let form;
+	import BookingForm from '$lib/components/BookingForm.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import Heading from '$lib/components/Heading.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
@@ -13,6 +14,5 @@
 <Section>
 	<Heading title="Semper Finish" lead="We’re a local crew delivering quality work across the St. Louis metro area. Woman-owned and veteran-operated, we bring painting and precision you can trust. Your home. Our honor." />
 	<Spacer />
-	<BookingForm />
+	<BookingForm {form} />
 </Section>
-

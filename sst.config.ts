@@ -18,12 +18,29 @@ export default $config({
   async run() {
     const isProd = $app.stage === "prod";
 
+    const api = new sst.aws.ApiGatewayV2("BookingApi");
+    api.route("POST /booking-request", {
+      handler: "functions/booking-request.handler",
+      permissions: [
+        {
+          actions: ["ses:SendEmail", "ses:SendRawEmail"],
+          resources: ["*"]
+        }
+      ],
+      environment: {
+        EMAIL_FROM: "booking@semperfinishllc.com",
+        EMAIL_TO: "ryantoken13@gmail.com",
+      },
+    });
+
     new sst.aws.SvelteKit("semper-finish", {
+      environment: {
+        BOOKING_API_URL: api.url,
+      },
       domain: isProd
         ? {
             name: "semperfinishllc.com",
             redirects: ["www.semperfinishllc.com"],
-            // Using Route 53 in the same account, so default sst.aws.dns() is fine
           }
         : undefined,
     });
