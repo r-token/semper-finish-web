@@ -10,6 +10,8 @@
 	let successMessage = $state('');
 	let isSubmitting = $state(false);
 	let formKey = $state('init');
+	// Timestamp captured at render to power an anti-bot time trap
+	let renderTs = Date.now();
 
 	$effect(() => {
 		if (!successMessage) return;
@@ -47,6 +49,10 @@
 			}
 		};
 	}} class="mt-6 space-y-4">
+			<!-- Anti-bot fields: honeypot and time-trap -->
+			<input type="text" name="referrer" tabindex="-1" autocomplete="off" value="" aria-hidden="true"
+				style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" />
+			<input type="hidden" name="form_ts" value={renderTs} />
 			<Grid class="sm:grid-cols-2">
 				<Field label="First Name">
 					<input

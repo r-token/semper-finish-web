@@ -11,8 +11,22 @@ function sanitize(input: unknown, max = 5000) {
   return s.trim().replace(/\s+/g, " ").replace(/[<>]/g, "").slice(0, max);
 }
 
-export async function handler(event: { body?: string | null }) {
+export async function handler(event: { body?: string | null; headers?: Record<string, string | undefined> }) {
   try {
+    // Require shared secret to protect this function from direct hits
+    const secret = process.env.BOOKING_API_SECRET;
+    if (!secret) {
+      return { statusCode: 500, body: "Server not configured" };
+    }
+
+    const headers = event.headers || {};
+    // Case-insensitive header lookup
+    const headerKey = Object.keys(headers).find((k) => k.toLowerCase() === "x-api-key");
+    const provided = headerKey ? headers[headerKey] : undefined;
+    if (!provided || provided !== secret) {
+      return { statusCode: 403, body: "Forbidden" };
+    }
+
     if (!event.body) {
       return { statusCode: 400, body: "Missing body" };
     }

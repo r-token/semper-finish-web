@@ -22,6 +22,26 @@ export const actions: Actions = {
   default: async ({ request, fetch }) => {
     const data = await request.formData();
 
+    // Anti-bot honeypot and time-trap
+    const referrer = String(data.get('referrer') ?? '').trim();
+    const formTsRaw = String(data.get('form_ts') ?? '').trim();
+    const formTs = Number(formTsRaw);
+    const now = Date.now();
+
+    // If honeypot filled, silently fail with generic error
+    if (referrer) {
+      return fail(400, {
+        error: 'Please fill out all required fields with valid values.'
+      });
+    }
+
+    // Require at least 3 seconds between render and submit
+    if (!Number.isFinite(formTs) || now - formTs < 3000) {
+      return fail(400, {
+        error: 'Please fill out all required fields with valid values.'
+      });
+    }
+
     const firstName = sanitizeString(data.get('firstName'), 100);
     const lastName = sanitizeString(data.get('lastName'), 100);
     const email = sanitizeEmail(data.get('email'));
@@ -41,10 +61,24 @@ export const actions: Actions = {
       });
     }
 
+    // Ensure secret is configured server-side
+    const apiKey = env.BOOKING_API_SECRET;
+    if (!apiKey) {
+      return fail(500, {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        details,
+        error: 'Server not configured.'
+      });
+    }
+
     try {
       const res = await fetch(`${env.BOOKING_API_URL}/booking-request`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', 'x-api-key': apiKey },
         body: JSON.stringify({ firstName, lastName, email, phone, address, details }),
       });
 
