@@ -10,6 +10,11 @@
   import { logoWithName } from '$lib/images';
 </script>
 
+<svelte:head>
+  <title>Meet the Team | Semper Finish</title>
+  <meta name="description" content="Meet the Semper Finish team — craftspeople dedicated to quality work for homes and businesses." />
+</svelte:head>
+
 <Section width="wide">
   <Heading title="Meet the Team" lead="A power combo focused on solving problems for you and your family." />
   <Spacer />

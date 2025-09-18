@@ -4,17 +4,28 @@ export default $config({
   app(input) {
     return {
       name: "semper-finish",
-      removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
+      removal: input?.stage === "prod" ? "retain" : "remove",
+      protect: ["prod"].includes(input?.stage),
       home: "aws",
       providers: {
         aws: {
-          profile: "personal"
-        }
+          profile: "personal",
+          region: "us-east-2",
+        },
       },
     };
   },
   async run() {
-    new sst.aws.SvelteKit("semper-finish");
+    const isProd = $app.stage === "prod";
+
+    new sst.aws.SvelteKit("semper-finish", {
+      domain: isProd
+        ? {
+            name: "semperfinishllc.com",
+            redirects: ["www.semperfinishllc.com"],
+            // Using Route 53 in the same account, so default sst.aws.dns() is fine
+          }
+        : undefined,
+    });
   },
 });

@@ -8,6 +8,11 @@
   import Prose from '$lib/components/Prose.svelte';
 </script>
 
+<svelte:head>
+  <title>Customer Testimony | Semper Finish</title>
+  <meta name="description" content="Read real reviews and testimonials from Semper Finish customers about our services." />
+</svelte:head>
+
 <Section>
   <Heading title="Customer Testimony" lead="A few words from folks we've worked with." />
   <Spacer />

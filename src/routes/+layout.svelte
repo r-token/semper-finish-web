@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-  <link rel="icon" href={favicon} />
+  <link rel="icon" type="image/svg+xml" sizes="any" href={favicon} />
   <!-- Light/dark theme-color for better address bar styling -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />

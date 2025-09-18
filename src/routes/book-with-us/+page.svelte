@@ -5,6 +5,11 @@
   import Spacer from '$lib/components/Spacer.svelte';
 </script>
 
+<svelte:head>
+  <title>Book With Us | Semper Finish</title>
+  <meta name="description" content="Book a free estimate with Semper Finish. Schedule services with our professional team." />
+</svelte:head>
+
 <Section>
   <Heading title="Book With Us" />
   <Spacer />
