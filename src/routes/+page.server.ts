@@ -1,6 +1,7 @@
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { Resource } from 'sst';
 
 function sanitizeString(input: unknown, maxLen = 500) {
   const s = typeof input === 'string' ? input : '';
@@ -61,8 +62,16 @@ export const actions: Actions = {
       });
     }
 
-    // Ensure secret is configured server-side
-    const apiKey = env.BOOKING_API_SECRET;
+    // Ensure secret is configured server-side (prefer env, then SST Secret if linked)
+    let apiKey: string | undefined = env.BOOKING_API_SECRET;
+    if (!apiKey) {
+      try {
+        // Accessing Resource.BookingApiSecret throws if not linked; guard with try/catch
+        apiKey = (Resource as any).BookingApiSecret?.value as string | undefined;
+      } catch {
+        // ignore - will handle missing below
+      }
+    }
     if (!apiKey) {
       return fail(500, {
         firstName,

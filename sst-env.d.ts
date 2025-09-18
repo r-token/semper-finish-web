@@ -9,6 +9,10 @@ declare module "sst" {
       "type": "sst.aws.ApiGatewayV2"
       "url": string
     }
+    "BookingApiSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "semper-finish": {
       "type": "sst.aws.SvelteKit"
       "url": string

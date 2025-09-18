@@ -10,16 +10,15 @@ export default $config({
       providers: {
         aws: {
           profile: "personal",
-          region: "us-east-2",
+          region: "us-east-1",
         },
       },
     };
   },
   async run() {
     const isProd = $app.stage === "prod";
+    const bookingApiSecret = new sst.Secret("BookingApiSecret")
 
-    // Require secret in prod deploy environment to avoid misconfiguration
-    const bookingApiSecret = process.env.BOOKING_API_SECRET;
     if (isProd && !bookingApiSecret) {
       throw new Error("BOOKING_API_SECRET is required for prod deployments. Set it in your deploy environment.");
     }
@@ -27,6 +26,8 @@ export default $config({
     const api = new sst.aws.ApiGatewayV2("BookingApi");
     api.route("POST /booking-request", {
       handler: "functions/booking-request.handler",
+      runtime: "nodejs22.x",
+      link: [bookingApiSecret],
       permissions: [
         {
           actions: ["ses:SendEmail", "ses:SendRawEmail"],
@@ -36,14 +37,13 @@ export default $config({
       environment: {
         EMAIL_FROM: "booking@semperfinishllc.com",
         EMAIL_TO: "ryantoken13@gmail.com",
-        ...(bookingApiSecret ? { BOOKING_API_SECRET: bookingApiSecret } : {}),
       },
     });
 
     new sst.aws.SvelteKit("semper-finish", {
+      link: [bookingApiSecret],
       environment: {
-        BOOKING_API_URL: api.url,
-        ...(bookingApiSecret ? { BOOKING_API_SECRET: bookingApiSecret } : {}),
+        BOOKING_API_URL: api.url
       },
       domain: isProd
         ? {

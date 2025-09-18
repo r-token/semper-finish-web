@@ -1,6 +1,7 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import { Resource } from "sst";
 
-const REGION = process.env.AWS_REGION || "us-east-2";
+const REGION = process.env.AWS_REGION || "us-east-1";
 const EMAIL_FROM = process.env.EMAIL_FROM || "booking@semperfinishllc.com";
 const EMAIL_TO = (process.env.EMAIL_TO || "").split(/[,\s]+/).filter(Boolean);
 
@@ -14,7 +15,15 @@ function sanitize(input: unknown, max = 5000) {
 export async function handler(event: { body?: string | null; headers?: Record<string, string | undefined> }) {
   try {
     // Require shared secret to protect this function from direct hits
-    const secret = process.env.BOOKING_API_SECRET;
+    let secret: string | undefined = process.env.BOOKING_API_SECRET;
+    if (!secret) {
+      try {
+        // Accessing Resource.BookingApiSecret throws if not linked; guard with try/catch
+        secret = (Resource as any).BookingApiSecret?.value as string | undefined;
+      } catch {
+        // ignore - handled below
+      }
+    }
     if (!secret) {
       return { statusCode: 500, body: "Server not configured" };
     }
