@@ -28,29 +28,21 @@
 		<p>Tell us a little about your project and how we can help. We’ll follow up quickly.</p>
 	</Prose>
 
-	{#if form?.error}
-		<p class="text-sm text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded p-3" role="alert" aria-live="polite">{form.error}</p>
-	{/if}
-	{#if successMessage}
-		<p class="text-sm text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded p-3" role="status" aria-live="polite" in:fade={{ duration: 150 }} out:fade={{ duration: 250 }}>{successMessage}</p>
-	{/if}
-
 	{#key formKey}
-	<form method="POST" use:enhance={({ form }) => {
-	isSubmitting = true;
-	successMessage = '';
+	<form method="POST" use:enhance={({ formElement }) => {
+		isSubmitting = true;
+		successMessage = '';
+		form = { ...form, error: undefined }; // reset any form errors
+		
 		return async ({ result, update }) => {
 			try {
-				// Always propagate server result first so form data reflects cleared state
 				await update(result);
 				if (result.type === 'success') {
 					successMessage = 'Thanks! We received your request and will be in touch shortly.';
-					form.reset();
-					// Force-remount the form to clear any bound inputs
+					formElement.reset();
 					formKey = Math.random().toString(36).slice(2);
 				}
 			} finally {
-				// Re-enable the button regardless of outcome
 				isSubmitting = false;
 			}
 		};
@@ -113,6 +105,7 @@
 					name="details"
 					rows="5"
 					placeholder="Tell us what you need..."
+					required
 					class={`${inputClass} resize-y min-h-24`}
 				></textarea>
 			</Field>
@@ -123,7 +116,14 @@
 				{:else}
 					Submit
 				{/if}
-			</button>
+			</button> 
 		</form>
 	{/key}
+	
+	{#if form?.error}
+		<p class="text-sm mt-6 text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded p-3" role="alert" aria-live="polite">{form.error}</p>
+	{/if}
+	{#if successMessage}
+		<p class="text-sm mt-6 text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded p-3" role="status" aria-live="polite" in:fade={{ duration: 150 }} out:fade={{ duration: 250 }}>{successMessage}</p>
+	{/if}
 </Card>

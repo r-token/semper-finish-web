@@ -26,7 +26,7 @@ export async function handler(event: { body?: string | null }) {
     const address = sanitize(parsed.address, 200);
     const details = sanitize(parsed.details, 5000);
 
-    if (!firstName || !lastName || !email || !phone || !address) {
+    if (!firstName || !lastName || !email || !phone || !address || !details) {
       return { statusCode: 400, body: "Missing required fields" };
     }
     if (EMAIL_TO.length === 0) {
