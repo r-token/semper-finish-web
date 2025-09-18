@@ -34,7 +34,7 @@
         <img src="/logo-with-name.png" alt="Semper Finish" class="h-6 w-auto" />
         <span class="sr-only">Semper Finish</span>
       </div>
-      <p class="m-0">© {new Date().getFullYear()} Semper Finish</p>
+      <p class="m-0">© {new Date().getFullYear()} Semper Finish, LLC.</p>
     </div>
   </footer>
 </div>
