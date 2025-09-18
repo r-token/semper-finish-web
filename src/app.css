@@ -1,3 +1,32 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+/* Tailwind v4 CSS-based theming */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Brand colors */
+  --color-primary: #CC101F; /* red */
+  --color-blue: #004481;    /* primary blue */
+  --color-gold: #A77C29;    /* gold */
+  --color-yellow: #FFD500;  /* yellow */
+  --color-silver: #757575;  /* silver */
+
+  /* Base surface tokens */
+  --color-bg: #ffffff;
+  --color-fg: #0a0a0a;
+  --color-bg-dark: #0a0a0a;
+  --color-fg-dark: #f3f4f6;
+}
+
+@layer base {
+  html { color-scheme: light dark; }
+  body { @apply font-sans bg-[color:var(--color-bg)] text-[color:var(--color-fg)] dark:bg-[color:var(--color-bg-dark)] dark:text-[color:var(--color-fg-dark)]; }
+
+  /* Make anchor defaults tasteful but minimal */
+  a { @apply text-blue underline-offset-4 hover:underline dark:text-yellow; }
+}
+
+/* A simple container helper (optional, since we mostly use max-w utilities) */
+.container-safe { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }

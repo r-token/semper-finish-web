@@ -1,19 +1,34 @@
 <script lang="ts">
-	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
-	
-	let { children } = $props();
+  import '../app.css';
+  import favicon from '$lib/assets/favicon.svg';
+  import Navbar from '$lib/components/Navbar.svelte';
+
+  let { children } = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+  <link rel="icon" href={favicon} />
+  <!-- Light/dark theme-color for better address bar styling -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
 </svelte:head>
 
-<nav>
-	<a href="/">Home</a>
-	<a href="/book-with-us">Book With Us</a>
-	<a href="/customer-testimony">Customer Testimony</a>
-	<a href="/meet-the-team">Meet the Team</a>
-</nav>
+<div class="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+  <Navbar />
 
-{@render children?.()}
+  <main class="container-safe pt-1 sm:pt-2 pb-6 sm:pb-8">
+    {#if children}
+      {@render children()}
+    {/if}
+  </main>
+
+  <footer class="border-t border-neutral-200 dark:border-neutral-800">
+    <div class="container-safe py-6 text-sm text-neutral-600 dark:text-neutral-400 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="/logo-with-name.png" alt="Semper Finish" class="h-6 w-auto" />
+        <span class="sr-only">Semper Finish</span>
+      </div>
+      <p class="m-0">© {new Date().getFullYear()} Semper Finish</p>
+    </div>
+  </footer>
+</div>
