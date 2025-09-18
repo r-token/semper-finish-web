@@ -2,6 +2,8 @@
   import '../app.css';
   import favicon from '$lib/assets/favicon.svg';
   import Navbar from '$lib/components/Navbar.svelte';
+  import { fade } from 'svelte/transition';
+  import { page } from '$app/stores';
 
   let { children } = $props();
 </script>
@@ -17,9 +19,13 @@
   <Navbar />
 
   <main class="container-safe pt-1 sm:pt-2 pb-6 sm:pb-8">
-    {#if children}
-      {@render children()}
-    {/if}
+    {#key $page.url.pathname}
+      <div in:fade={{ duration: 400 }}>
+        {#if children}
+          {@render children()}
+        {/if}
+      </div>
+    {/key}
   </main>
 
   <footer class="border-t border-neutral-200 dark:border-neutral-800">
