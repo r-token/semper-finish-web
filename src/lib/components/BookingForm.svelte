@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { base } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import Field from '$lib/components/Field.svelte';
 	import Grid from '$lib/components/Grid.svelte';
@@ -31,7 +32,7 @@
 	</Prose>
 
 	{#key formKey}
-	<form method="POST" use:enhance={({ formElement }) => {
+	<form method="POST" action={base + '/'} use:enhance={({ formElement }) => {
 		isSubmitting = true;
 		successMessage = '';
 		form = { ...form, error: undefined }; // reset any form errors
