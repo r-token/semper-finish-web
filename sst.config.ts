@@ -56,23 +56,23 @@ export default $config({
   
   console: {
     autodeploy: {
-      // Route pushes on `main` to the `prod` stage.
-      target({ branch }) {
-        if (branch === "main") return "prod";
+      target(ctx) {
+        // Normalize various inputs the Console might pass
+        const ref = ctx.ref ?? ctx.branch ?? ctx.event?.ref ?? "";
+        const branch = ref.replace(/^refs\/heads\//, "");
+  
+        if (branch === "main") return ["prod"]; // or return "prod"
+        return []; // explicitly no targets for other branches
       },
   
-      // Take over the build and use Bun for install + deploy
       async workflow({ $, event }) {
-        // Install dependencies with Bun
         await $`bun i`;
-  
-        // Deploy/remove with the Bun runner. The Console will supply the stage from `target()`
         if (event.action === "removed") {
           await $`bun sst remove`;
         } else {
           await $`bun sst deploy`;
         }
-      },
-    },
-  },
+      }
+    }
+  }
 });
