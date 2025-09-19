@@ -56,6 +56,15 @@ export default $config({
   
   console: {
     autodeploy: {
+      target(ctx) {
+        // Normalize various inputs the Console might pass
+        const ref = ctx.ref ?? ctx.branch ?? ctx.event?.ref ?? "";
+        const branch = ref.replace(/^refs\/heads\//, "");
+  
+        if (branch === "main") return ["prod"]; // or return "prod"
+        return []; // explicitly no targets for other branches
+      },
+  
       async workflow({ $, event }) {
         await $`bun i`;
         if (event.action === "removed") {
