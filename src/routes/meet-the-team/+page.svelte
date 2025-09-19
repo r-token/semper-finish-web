@@ -12,6 +12,14 @@
 <svelte:head>
   <title>Meet the Team | Semper Finish</title>
   <meta name="description" content="Meet the Semper Finish team — craftspeople dedicated to quality work for homes and businesses." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Meet the Team | Semper Finish" />
+  <meta property="og:description" content="Meet the Semper Finish team — craftspeople dedicated to quality work for homes and businesses." />
+
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Meet the Team | Semper Finish" />
+  <meta name="twitter:description" content="Meet the Semper Finish team — craftspeople dedicated to quality work for homes and businesses." />
 </svelte:head>
 
 <Section width="wide">

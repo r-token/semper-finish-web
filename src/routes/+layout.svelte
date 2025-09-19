@@ -13,6 +13,23 @@
   <!-- Light/dark theme-color for better address bar styling -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href={$page.url.href} />
+
+  <!-- Open Graph defaults -->
+  <meta property="og:site_name" content="Semper Finish" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={$page.url.href} />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter defaults -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/logo.png" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
 </svelte:head>
 
 <div class="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">

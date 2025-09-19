@@ -9,6 +9,14 @@
 <svelte:head>
   <title>Semper Finish</title>
   <meta name="description" content="Semper Finish delivers professional painting and handyman jobs to the St. Louis metro area." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Semper Finish" />
+  <meta property="og:description" content="Semper Finish delivers professional painting and handyman jobs to the St. Louis metro area." />
+
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Semper Finish" />
+  <meta name="twitter:description" content="Semper Finish delivers professional painting and handyman jobs to the St. Louis metro area." />
 </svelte:head>
 
 <Section>

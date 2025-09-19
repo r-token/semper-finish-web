@@ -11,6 +11,14 @@
 <svelte:head>
   <title>Customer Testimony | Semper Finish</title>
   <meta name="description" content="Read real reviews and testimonials from Semper Finish customers about our services." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Customer Testimony | Semper Finish" />
+  <meta property="og:description" content="Read real reviews and testimonials from Semper Finish customers about our services." />
+
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Customer Testimony | Semper Finish" />
+  <meta name="twitter:description" content="Read real reviews and testimonials from Semper Finish customers about our services." />
 </svelte:head>
 
 <Section>
