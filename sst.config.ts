@@ -56,17 +56,9 @@ export default $config({
   
   console: {
     autodeploy: {
-      target() {
-        return "prod";
-      },
-  
-      // Use Bun to avoid Node 18 engine issues in the runner
-      async workflow({ $, event }) {
-        await $`bun i`;
-        if (event.action === "removed") {
-          await $`bun sst remove`;
-        } else {
-          await $`bun sst deploy`;
+      target(event) {
+        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
+          return { stage: "prod" };
         }
       }
     }
