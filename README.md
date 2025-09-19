@@ -1,6 +1,6 @@
 # Semper Finish
 
-The website for Semper Finish, LLC. Built with Svelte and SST. [semperfinishllc.com](https://semperfinishllc.com)
+The website for Semper Finish, LLC. Built with SvelteKit and SST. [semperfinishllc.com](https://semperfinishllc.com)
 
 Things to know:
 * To run the app locally: `npx sst dev`
