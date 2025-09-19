@@ -56,15 +56,11 @@ export default $config({
   
   console: {
     autodeploy: {
-      // Map pushes to `main` → stage "prod"
-      target(input) {
-        const ref = input?.ref ?? input?.branch ?? input?.event?.ref ?? "";
-        const branch = ref.replace(/^refs\/heads\//, "");
-        if (branch === "main") return "prod";
-        return undefined; // skip other branches
+      target() {
+        return "prod";
       },
   
-      // Use Bun to avoid Node 18 engine issues
+      // Use Bun to avoid Node 18 engine issues in the runner
       async workflow({ $, event }) {
         await $`bun i`;
         if (event.action === "removed") {
