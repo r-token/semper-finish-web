@@ -64,16 +64,22 @@ export default $config({
       },
   
       async workflow({ $, event }) {
-        // Install Volta and use Node 22.12
-        await $`curl -fsSL https://get.volta.sh | bash -s -- --skip-setup`;
-        $.env("VOLTA_HOME", "/root/.volta");
-        $.env("PATH", `/root/.volta/bin:${$.env("PATH")}`);
-        await $`volta install node@22.12.0`;
-  
-        // Optional: verify the version in the logs
+        // 1) Install Node 22 and put it first on PATH for the entire job
+        const NODE_VERSION = "v22.12.0";
+        const TGZ = `https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz`;
+      
+        await $`curl -fsSL ${TGZ} -o /tmp/node.tar.xz`;
+        await $`mkdir -p /opt/node-${NODE_VERSION}`;
+        await $`tar -xJf /tmp/node.tar.xz -C /opt/node-${NODE_VERSION} --strip-components=1`;
+      
+        // Make Node 22 first on PATH for all subsequent steps (including nested builders)
+        $.env("PATH", `/opt/node-${NODE_VERSION}/bin:${$.env("PATH")}`);
+      
+        // Optional sanity checks
         await $`node -v`;
-  
-        // Install deps and deploy
+        await $`npm -v`;
+      
+        // 2) Install deps and deploy with Bun
         await $`bun i`;
         if (event.action === "removed") {
           await $`bun sst remove`;
