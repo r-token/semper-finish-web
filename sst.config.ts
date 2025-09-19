@@ -57,8 +57,10 @@ export default $config({
   console: {
     autodeploy: {
       // keep your target() that returns "prod", or the unconditional one you added
-      target() {
-        return "prod";
+      target(event) {
+        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
+          return { stage: "prod" };
+        }
       },
   
       async workflow({ $, event }) {
