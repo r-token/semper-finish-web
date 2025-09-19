@@ -1,6 +1,5 @@
 <script lang="ts">
   import '../app.css';
-  import favicon from '$lib/assets/favicon.svg';
   import Navbar from '$lib/components/Navbar.svelte';
   import { fade } from 'svelte/transition';
   import { page } from '$app/stores';
@@ -9,7 +8,8 @@
 </script>
 
 <svelte:head>
-  <link rel="icon" type="image/svg+xml" sizes="any" href={favicon} />
+  <link rel="icon" type="image/png" href="/logo-noname.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <!-- Light/dark theme-color for better address bar styling -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
@@ -31,7 +31,7 @@
   <footer class="border-t border-neutral-200 dark:border-neutral-800">
     <div class="container-safe py-6 text-sm text-neutral-600 dark:text-neutral-400 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <img src="/logo-with-name.png" alt="Semper Finish" class="h-6 w-auto" />
+        <img src="/logo.png" alt="Semper Finish" class="h-6 w-auto" />
         <span class="sr-only">Semper Finish</span>
       </div>
       <p class="m-0">© {new Date().getFullYear()} Semper Finish, LLC.</p>

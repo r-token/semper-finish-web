@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { logoWithName } from '$lib/images';
   import NavLink from './NavLink.svelte';
   import { page } from '$app/stores';
 
@@ -28,7 +27,7 @@
 <header class="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-neutral-800 dark:bg-neutral-950/80 dark:supports-[backdrop-filter]:bg-neutral-950/60">
   <div class="container-safe h-16 flex items-center justify-between gap-4">
     <a href="/" class="flex items-center gap-3">
-      <img src={logoWithName} alt="Semper Finish" class="h-8 w-auto" />
+      <img src="/logo.png" alt="Semper Finish" class="h-8 w-auto" />
       <span class="sr-only">Semper Finish</span>
     </a>
 

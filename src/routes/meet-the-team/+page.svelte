@@ -7,7 +7,6 @@
   import Grid from '$lib/components/Grid.svelte';
   import Heading from '$lib/components/Heading.svelte';
   import Spacer from '$lib/components/Spacer.svelte';
-  import { logoWithName } from '$lib/images';
 </script>
 
 <svelte:head>
@@ -22,7 +21,7 @@
   <Grid class="sm:grid-cols-2 lg:grid-cols-3">
     <Card>
       <div class="space-y-4">
-        <ImageBlock src={logoWithName} alt="Allison Token - Team Member" />
+        <ImageBlock src="/logo.png" alt="Allison Token - Team Member" />
         <TextBlock title="Allison Token" lead="Owner • Co-founder">
           <p>Allison's bio here.</p>
           <div class="pt-2">
@@ -34,7 +33,7 @@
 
     <Card>
       <div class="space-y-4">
-        <ImageBlock src={logoWithName} alt="Team member" />
+        <ImageBlock src="/logo.png" alt="Team member" />
         <TextBlock title="Nicholas Neidlinger" lead="Painter • Co-founder">
           <p>Nick's bio here.</p>
           <div class="pt-2">

@@ -12,7 +12,15 @@
 </svelte:head>
 
 <Section>
-	<Heading title="Semper Finish" lead="We’re a local crew delivering quality work across the St. Louis metro area. Woman-owned and veteran-operated, we bring painting and precision you can trust. Your home. Our honor." />
+	<!-- Responsive header: Heading on left, spacer, logo on right (stacks on small screens) -->
+	<div class="flex flex-col lg:flex-row items-start lg:items-center gap-4">
+		<div class="min-w-0">
+			<Heading title="Semper Finish" lead="We’re a local crew delivering quality work across the St. Louis metro area. Woman-owned and veteran-operated, we bring painting and precision you can trust. Your home. Our honor." />
+		</div>
+		<div class="hidden lg:block flex-1"></div>
+		<img src="/logo.png" alt="Semper Finish" class="h-14 sm:h-16 lg:h-20 w-auto" />
+	</div>
+
 	<Spacer />
 	<BookingForm {form} />
 </Section>
