@@ -36,7 +36,7 @@ export default $config({
       ],
       environment: {
         EMAIL_FROM: "booking@semperfinishllc.com",
-        EMAIL_TO: "ryantoken13@gmail.com",
+        EMAIL_TO: "ryantoken13@gmail.com,semperfinishllc@gmail.com",
       },
     });
 

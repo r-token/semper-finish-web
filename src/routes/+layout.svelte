@@ -9,7 +9,7 @@
 
 <svelte:head>
   <link rel="icon" type="image/png" href="/logo-noname.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="/logo-noname.png" />
   <!-- Light/dark theme-color for better address bar styling -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
