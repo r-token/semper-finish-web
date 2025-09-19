@@ -21,7 +21,7 @@ export default $config({
 
     const api = new sst.aws.ApiGatewayV2("BookingApi");
     api.route("POST /booking-request", {
-      handler: "functions/booking-request.handler",
+      handler: "src/lib/server/booking-request.handler",
       runtime: "nodejs22.x",
       link: [bookingApiSecret],
       permissions: [
@@ -32,7 +32,9 @@ export default $config({
       ],
       environment: {
         EMAIL_FROM: "booking@semperfinishllc.com",
-        EMAIL_TO: "ryantoken13@gmail.com,semperfinishllc@gmail.com",
+        EMAIL_TO: isProd
+          ? "ryantoken13@gmail.com,semperfinishllc@gmail.com"
+          : "ryantoken13@gmail.com",
       },
     });
 

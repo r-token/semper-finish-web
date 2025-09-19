@@ -1,5 +1,6 @@
 <script>
 	export let form;
+	export let data;
 	import BookingForm from '$lib/components/BookingForm.svelte';
   import Section from '$lib/components/Section.svelte';
   import Heading from '$lib/components/Heading.svelte';
@@ -22,5 +23,5 @@
 <Section>
   <Heading title="Book With Us" />
   <Spacer />
-  <BookingForm {form} />
+  <BookingForm {form} csrfToken={data?.csrfToken} />
 </Section>

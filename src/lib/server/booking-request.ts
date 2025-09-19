@@ -79,7 +79,6 @@ export async function handler(event: { body?: string | null; headers?: Record<st
     const cmd = new SendEmailCommand({
       FromEmailAddress: EMAIL_FROM,
       Destination: { ToAddresses: EMAIL_TO },
-      ReplyToAddresses: [email],
       Content: {
         Simple: {
           Subject: { Data: subject, Charset: "UTF-8" },

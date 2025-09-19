@@ -7,7 +7,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import Prose from '$lib/components/Prose.svelte';
 
-	let { form } = $props();
+	let { form, csrfToken } = $props();
 	let successMessage = $state('');
 	let isSubmitting = $state(false);
 	let formKey = $state('init');
@@ -50,10 +50,11 @@
 			}
 		};
 	}} class="mt-6 space-y-4">
-			<!-- Anti-bot fields: honeypot and time-trap -->
+			<!-- Anti-bot fields: honeypot, time-trap, and CSRF token -->
 			<input type="text" name="referrer" tabindex="-1" autocomplete="off" value="" aria-hidden="true"
 				style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" />
 			<input type="hidden" name="form_ts" value={renderTs} />
+			<input type="hidden" name="csrf_token" value={csrfToken} />
 			<Grid class="sm:grid-cols-2">
 				<Field label="First Name">
 					<input

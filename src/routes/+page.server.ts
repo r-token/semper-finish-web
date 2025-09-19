@@ -1,7 +1,8 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { Resource } from 'sst';
+import { issueCsrf, verifyCsrf } from '$lib/server/csrf';
 
 function sanitizeString(input: unknown, maxLen = 500) {
   const s = typeof input === 'string' ? input : '';
@@ -19,8 +20,24 @@ function sanitizePhone(input: unknown) {
   return digits;
 }
 
+export const load: PageServerLoad = async ({ cookies }) => {
+  const { csrfToken } = issueCsrf(cookies);
+  return { csrfToken };
+};
+
 export const actions: Actions = {
-  default: async ({ request, fetch }) => {
+  default: async ({ request, fetch, cookies, url }) => {
+    // Basic Origin/Referer check (non-breaking): if Origin is present and doesn't match host, reject
+    const origin = request.headers.get('origin') || '';
+    const referer = request.headers.get('referer') || '';
+    const host = request.headers.get('host') || url.host;
+    if (origin && !origin.includes(host)) {
+      return fail(400, { error: 'Please fill out all required fields with valid values.' });
+    }
+    if (referer && !referer.includes(host)) {
+      return fail(400, { error: 'Please fill out all required fields with valid values.' });
+    }
+
     const data = await request.formData();
 
     // Anti-bot honeypot and time-trap
@@ -29,18 +46,18 @@ export const actions: Actions = {
     const formTs = Number(formTsRaw);
     const now = Date.now();
 
-    // If honeypot filled, silently fail with generic error
     if (referrer) {
-      return fail(400, {
-        error: 'Please fill out all required fields with valid values.'
-      });
+      return fail(400, { error: 'Please fill out all required fields with valid values.' });
     }
 
-    // Require at least 3 seconds between render and submit
     if (!Number.isFinite(formTs) || now - formTs < 3000) {
-      return fail(400, {
-        error: 'Please fill out all required fields with valid values.'
-      });
+      return fail(400, { error: 'Please fill out all required fields with valid values.' });
+    }
+
+    // CSRF: verify hidden token against HttpOnly cookie signature and TTL
+    const hidden = String(data.get('csrf_token') ?? '');
+    if (!verifyCsrf(cookies, hidden)) {
+      return fail(400, { error: 'Please fill out all required fields with valid values.' });
     }
 
     const firstName = sanitizeString(data.get('firstName'), 100);
@@ -66,11 +83,8 @@ export const actions: Actions = {
     let apiKey: string | undefined = env.BOOKING_API_SECRET;
     if (!apiKey) {
       try {
-        // Accessing Resource.BookingApiSecret throws if not linked; guard with try/catch
         apiKey = (Resource as any).BookingApiSecret?.value as string | undefined;
-      } catch {
-        // ignore - will handle missing below
-      }
+      } catch {}
     }
     if (!apiKey) {
       return fail(500, {
