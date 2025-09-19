@@ -58,7 +58,7 @@ export default $config({
     autodeploy: {
       target(event) {
         if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
-          return { stage: "prod" };
+          return { stage: "prod" }; // deploy main to prod
         }
       }
     }
