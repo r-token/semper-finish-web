@@ -56,15 +56,15 @@ export default $config({
   
   console: {
     autodeploy: {
-      target(ctx) {
-        // Normalize various inputs the Console might pass
-        const ref = ctx.ref ?? ctx.branch ?? ctx.event?.ref ?? "";
+      // Map pushes to `main` → stage "prod"
+      target(input) {
+        const ref = input?.ref ?? input?.branch ?? input?.event?.ref ?? "";
         const branch = ref.replace(/^refs\/heads\//, "");
-  
-        if (branch === "main") return ["prod"]; // or return "prod"
-        return []; // explicitly no targets for other branches
+        if (branch === "main") return "prod";
+        return undefined; // skip other branches
       },
   
+      // Use Bun to avoid Node 18 engine issues
       async workflow({ $, event }) {
         await $`bun i`;
         if (event.action === "removed") {
