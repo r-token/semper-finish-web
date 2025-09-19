@@ -17,11 +17,7 @@ export default $config({
   },
   async run() {
     const isProd = $app.stage === "prod";
-    const bookingApiSecret = new sst.Secret("BookingApiSecret")
-
-    if (isProd && !bookingApiSecret) {
-      throw new Error("BOOKING_API_SECRET is required for prod deployments. Set it in your deploy environment.");
-    }
+    const bookingApiSecret = new sst.Secret("BookingApiSecret");
 
     const api = new sst.aws.ApiGatewayV2("BookingApi");
     api.route("POST /booking-request", {
@@ -56,7 +52,6 @@ export default $config({
   
   console: {
     autodeploy: {
-      // keep your target() that returns "prod", or the unconditional one you added
       target(event) {
         if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
           return { stage: "prod" };
@@ -64,7 +59,7 @@ export default $config({
       },
   
       async workflow({ $, event }) {
-        // 1) Install Node 22 and put it first on PATH for the entire job
+        // Install Node 22
         const NODE_VERSION = "v22.12.0";
         const TGZ = `https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz`;
       
@@ -72,19 +67,24 @@ export default $config({
         await $`mkdir -p /opt/node-${NODE_VERSION}`;
         await $`tar -xJf /tmp/node.tar.xz -C /opt/node-${NODE_VERSION} --strip-components=1`;
       
-        // Make Node 22 first on PATH for all subsequent steps (including nested builders)
-        $.env("PATH", `/opt/node-${NODE_VERSION}/bin:${$.env("PATH")}`);
+        // Update PATH and create symlinks to ensure node/npm are available
+        const nodePath = `/opt/node-${NODE_VERSION}/bin`;
+        $.env("PATH", `${nodePath}:${$.env("PATH")}`);
+        
+        // Create symlinks in /usr/local/bin to ensure node is found
+        await $`sudo ln -sf ${nodePath}/node /usr/local/bin/node`;
+        await $`sudo ln -sf ${nodePath}/npm /usr/local/bin/npm`;
       
-        // Optional sanity checks
+        // Verify installation
         await $`node -v`;
         await $`npm -v`;
       
-        // 2) Install deps and deploy with Bun
-        await $`bun i`;
+        // Install dependencies and deploy
+        await $`npm install`;
         if (event.action === "removed") {
-          await $`bun sst remove`;
+          await $`npx sst remove`;
         } else {
-          await $`bun sst deploy`;
+          await $`npx sst deploy`;
         }
       }
     }
