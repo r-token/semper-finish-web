@@ -56,12 +56,22 @@ export default $config({
   
   console: {
     autodeploy: {
-      target(event) {
-        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
-          return { stage: "prod" };
-        }
+      // keep your target() that returns "prod", or the unconditional one you added
+      target() {
+        return "prod";
       },
+  
       async workflow({ $, event }) {
+        // Install Volta and use Node 22.12
+        await $`curl -fsSL https://get.volta.sh | bash -s -- --skip-setup`;
+        $.env("VOLTA_HOME", "/root/.volta");
+        $.env("PATH", `/root/.volta/bin:${$.env("PATH")}`);
+        await $`volta install node@22.12.0`;
+  
+        // Optional: verify the version in the logs
+        await $`node -v`;
+  
+        // Install deps and deploy
         await $`bun i`;
         if (event.action === "removed") {
           await $`bun sst remove`;
