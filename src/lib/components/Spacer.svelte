@@ -2,9 +2,9 @@
   const props = $props<{ size?: 'sm' | 'md' | 'lg' }>();
   let { size = 'md' } = props;
   const cls = {
-    sm: 'mt-4 sm:mt-6',
-    md: 'mt-8 sm:mt-10',
-    lg: 'mt-12 sm:mt-16'
+    sm: 'mt-2 sm:mt-4',
+    md: 'mt-4 sm:mt-6',
+    lg: 'mt-6 sm:mt-8'
   } as const;
 </script>
 

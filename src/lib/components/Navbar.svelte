@@ -4,9 +4,8 @@
 
   const links = [
     { href: '/', label: 'Home' },
-    { href: '/book-with-us', label: 'Book With Us' },
-    { href: '/customer-testimony', label: 'Customer Testimony' },
-    { href: '/meet-the-team', label: 'Meet the Team' }
+    { href: '/meet-the-team', label: 'Meet the Team' },
+    { href: '/job-gallery', label: 'Job Gallery' }
   ];
 
   let pathname = $state('');
