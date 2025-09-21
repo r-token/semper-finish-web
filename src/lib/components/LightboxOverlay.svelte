@@ -1,6 +1,9 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  let { src, alt = 'Image', onClose = () => {}, onPrev, onNext, class: className = '', ...rest } = $props<{ src: string; alt?: string; onClose?: () => void; onPrev?: () => void; onNext?: () => void; class?: string }>();
+  import PhotoLabel from './PhotoLabel.svelte';
+  import type { GalleryLabel } from '$lib/utils/parseGalleryImages';
+
+  let { src, alt = 'Image', label = undefined as GalleryLabel | undefined, onClose, onPrev, onNext, class: className = '', ...rest } = $props<{ src: string; alt?: string; label?: GalleryLabel; onClose?: () => void; onPrev?: () => void; onNext?: () => void; class?: string }>();
 
   let dialogEl: HTMLDivElement | null = null;
 
@@ -22,7 +25,7 @@
   $effect(() => {
     if (!browser) return;
     if (dialogEl) {
-      try { dialogEl.focus({ preventScroll: true } as any); } catch {}
+      try { dialogEl.focus({ preventScroll: true } as any); } catch (e) { /* no-op */ }
     }
   });
 </script>
@@ -100,6 +103,10 @@
         class="max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)] object-contain rounded-lg shadow-2xl border border-neutral-200 dark:border-neutral-700 bg-white/5"
         draggable="false"
       />
+
+      {#if label}
+        <PhotoLabel label={label} class="pointer-events-none absolute left-3 bottom-3 sm:left-4 sm:bottom-4" />
+      {/if}
 
       <!-- Chevron controls for tap navigation on mobile -->
       <div class="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between">

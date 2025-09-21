@@ -3,17 +3,16 @@
   import Heading from '$lib/components/Heading.svelte';
   import Spacer from '$lib/components/Spacer.svelte';
   import JobGallery from '$lib/components/JobGallery.svelte';
+  import { parseGalleryImages } from '$lib/utils/parseGalleryImages';
 
-  // Load images for the first gallery (job1-gma) as URLs in natural numeric order
+  // Load images for the first gallery (job1-gma), then parse/sort by label order and numeric index
   const modules = import.meta.glob('$lib/assets/gallery/job1-gma/*.{jpg,jpeg,png,webp}', {
     eager: true,
     query: '?url',
     import: 'default'
   }) as Record<string, string>;
 
-  const gmaImages = Object.entries(modules)
-    .sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true }))
-    .map(([, url]) => url);
+  const gmaImages = parseGalleryImages(modules);
 </script>
 
 <svelte:head>

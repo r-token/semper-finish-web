@@ -1,7 +1,8 @@
 <script lang="ts">
   import HorizontalImageGallery from './HorizontalImageGallery.svelte';
+  import type { GalleryImage } from '$lib/utils/parseGalleryImages';
 
-  const props = $props<{ title: string; images: string[]; class?: string }>();
+  const props = $props<{ title: string; images: GalleryImage[]; class?: string }>();
   let { title, images, class: className = '', ...rest } = props;
 </script>
 

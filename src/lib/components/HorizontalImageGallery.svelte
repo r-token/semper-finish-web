@@ -1,9 +1,10 @@
 <script lang="ts">
   import LightboxOverlay from './LightboxOverlay.svelte';
-  type AltProp = string | string[] | ((src: string, index: number) => string);
+  import type { GalleryImage } from '$lib/utils/parseGalleryImages';
+  import PhotoLabel from './PhotoLabel.svelte';
+
   const props = $props<{
-    images: string[];
-    alt?: AltProp;
+    images: GalleryImage[];
     tileWidth?: string; // tailwind width class, e.g. 'w-80'
     tileHeight?: string; // tailwind height class, e.g. 'h-56'
     class?: string;
@@ -11,7 +12,6 @@
 
   let {
     images,
-    alt = '',
     tileWidth = 'w-80',
     tileHeight = 'h-56',
     class: className = '',
@@ -19,12 +19,6 @@
   } = props;
 
   let selectedIndex = $state<number | null>(null);
-
-  const altFor = (src: string, index: number): string => {
-    if (typeof alt === 'function') return alt(src, index);
-    if (Array.isArray(alt)) return alt[index] ?? `Photo ${index + 1}`;
-    return alt || `Photo ${index + 1}`;
-  };
 
   const open = (i: number) => {
     selectedIndex = i;
@@ -55,25 +49,29 @@
     role="list"
     aria-label="Image gallery"
   >
-    {#each images as src, i}
-      <li class="snap-start shrink-0" role="listitem">
+    {#each images as img, i}
+      <li class="relative snap-start shrink-0" role="listitem">
         <img
-          src={src}
-          alt={altFor(src, i)}
+          src={img.src}
+          alt={img.alt}
           loading="lazy"
           decoding="async"
           class={`${tileWidth} ${tileHeight} object-cover rounded-lg border border-neutral-200 dark:border-neutral-800 select-none cursor-zoom-in`}
           draggable="false"
           onclick={() => open(i)}
         />
+
+        <!-- Bottom-left label badge -->
+        <PhotoLabel label={img.label} class="pointer-events-none absolute left-1.5 bottom-1.5" />
       </li>
     {/each}
   </ul>
 
   {#if selectedIndex !== null}
     <LightboxOverlay
-      src={images[selectedIndex]}
-      alt={altFor(images[selectedIndex], selectedIndex)}
+      src={images[selectedIndex].src}
+      alt={images[selectedIndex].alt}
+      label={images[selectedIndex].label}
       onClose={close}
       onPrev={prev}
       onNext={next}
