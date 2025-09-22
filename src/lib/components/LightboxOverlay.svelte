@@ -101,18 +101,38 @@
     onpointerdown={(e) => {
       // Track swipe start
       if (e.pointerType === 'mouse' && e.button !== 0) return;
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-      (e.currentTarget as any)._startX = e.clientX;
-      (e.currentTarget as any)._startY = e.clientY;
-      (e.currentTarget as any)._dragging = true;
+      const el = e.currentTarget as HTMLElement & any;
+      el.setPointerCapture(e.pointerId);
+      el._startX = e.clientX;
+      el._startY = e.clientY;
+      el._dx = 0;
+      el._dy = 0;
+      el._dragging = true;
+      el._lock = 'pending'; // 'pending' | 'x' | 'y'
     }}
     onpointermove={(e) => {
-      // No visual drag effect for simplicity; just track movement
-      if (!(e.currentTarget as any)._dragging) return;
-      (e.currentTarget as any)._dx = e.clientX - (e.currentTarget as any)._startX;
-      (e.currentTarget as any)._dy = e.clientY - (e.currentTarget as any)._startY;
-      // Prevent default during drag to avoid background/page scroll on some browsers
-      e.preventDefault();
+      // Track movement and determine swipe direction with a small slop + angle-based lock
+      const el = e.currentTarget as any;
+      if (!el._dragging) return;
+      el._dx = e.clientX - el._startX;
+      el._dy = e.clientY - el._startY;
+
+      const absX = Math.abs(el._dx);
+      const absY = Math.abs(el._dy);
+
+      if (el._lock === 'pending') {
+        const dist = Math.hypot(el._dx, el._dy);
+        const slop = 12; // px before deciding a direction
+        if (dist > slop) {
+          const angleDeg = Math.atan2(absY, absX) * 180 / Math.PI; // 0 = horizontal
+          el._lock = angleDeg <= 40 ? 'x' : 'y'; // generous horizontal window
+        }
+      }
+
+      if (el._lock === 'x') {
+        // Once we decide it's a horizontal swipe, keep the browser from interfering
+        e.preventDefault();
+      }
     }}
     onpointerup={(e) => {
       const el: any = e.currentTarget;
@@ -120,14 +140,20 @@
       el._dragging = false;
       const dx = el._dx ?? 0;
       const dy = el._dy ?? 0;
-      el._dx = 0; el._dy = 0;
-      const threshold = 48; // px
-      if (Math.abs(dx) > threshold && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) onNext?.(); else onPrev?.();
+      const lock = el._lock;
+      el._dx = 0; el._dy = 0; el._lock = 'pending';
+
+      const threshold = 32; // px — easier than before
+      if (lock === 'x' && Math.abs(dx) > threshold) {
+        // Accept slightly diagonal swipes as horizontal
+        const angleDeg = Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI;
+        if (angleDeg <= 60) {
+          if (dx < 0) onNext?.(); else onPrev?.();
+        }
       }
     }}
     onpointercancel={(e) => {
-      const el: any = e.currentTarget; el._dragging = false; el._dx = 0; el._dy = 0;
+      const el: any = e.currentTarget; el._dragging = false; el._dx = 0; el._dy = 0; el._lock = 'pending';
     }}
   >
     <figure class="relative max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)]">
