@@ -66,17 +66,6 @@
   <!-- Dim background (click to close) -->
   <div class="absolute inset-0 bg-black/70" aria-hidden="true" onclick={close}></div>
 
-  <!-- Close button pinned to viewport corner with safe-area support -->
-  <button
-    class="absolute z-10 inline-flex items-center justify-center h-9 w-9 rounded-full bg-white text-neutral-900 shadow ring-1 ring-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:ring-neutral-700 dark:hover:bg-neutral-800 top-3 right-3 sm:top-4 sm:right-4 [top:calc(env(safe-area-inset-top)+0.75rem)] [right:calc(env(safe-area-inset-right)+0.75rem)]"
-    aria-label="Close image"
-    onclick={close}
-  >
-    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  </button>
 
   <!-- Dialog container; clicking outside the figure closes -->
   <div
@@ -163,6 +152,18 @@
         class="max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)] object-contain rounded-lg shadow-2xl border border-neutral-200 dark:border-neutral-700 bg-white/5"
         draggable="false"
       />
+
+      <!-- Close button anchored to the photo (top-right) -->
+      <button
+        class="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center justify-center h-9 w-9 rounded-full bg-white text-neutral-900 shadow ring-1 ring-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:ring-neutral-700 dark:hover:bg-neutral-800"
+        aria-label="Close image"
+        onclick={(e) => { e.stopPropagation(); close(); }}
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
 
       {#if label}
         <PhotoLabel label={label} class="pointer-events-none absolute left-3 bottom-3 sm:left-4 sm:bottom-4" />
