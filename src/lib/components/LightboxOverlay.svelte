@@ -69,7 +69,7 @@
 
   <!-- Dialog container; clicking outside the figure closes -->
   <div
-    class="relative z-10 h-full w-full grid place-items-center p-4 touch-pan-x overscroll-none"
+    class="relative z-10 h-full w-full grid place-items-center p-4 touch-none overscroll-none select-none"
     role="dialog"
     aria-modal="true"
     tabindex="0"
@@ -98,6 +98,8 @@
       el._dy = 0;
       el._dragging = true;
       el._lock = 'pending'; // 'pending' | 'x' | 'y'
+      el._t0 = e.timeStamp;
+      el._pointer = e.pointerType;
     }}
     onpointermove={(e) => {
       // Track movement and determine swipe direction with a small slop + angle-based lock
@@ -111,10 +113,10 @@
 
       if (el._lock === 'pending') {
         const dist = Math.hypot(el._dx, el._dy);
-        const slop = 12; // px before deciding a direction
+        const slop = 6; // px before deciding a direction (more responsive)
         if (dist > slop) {
           const angleDeg = Math.atan2(absY, absX) * 180 / Math.PI; // 0 = horizontal
-          el._lock = angleDeg <= 40 ? 'x' : 'y'; // generous horizontal window
+          el._lock = angleDeg <= 55 ? 'x' : 'y'; // more lenient horizontal window
         }
       }
 
@@ -130,14 +132,23 @@
       const dx = el._dx ?? 0;
       const dy = el._dy ?? 0;
       const lock = el._lock;
+      const dt = Math.max((e.timeStamp - (el._t0 ?? e.timeStamp)), 1); // ms
       el._dx = 0; el._dy = 0; el._lock = 'pending';
 
-      const threshold = 32; // px — easier than before
-      if (lock === 'x' && Math.abs(dx) > threshold) {
-        // Accept slightly diagonal swipes as horizontal
+      const baseThreshold = (el._pointer === 'touch') ? 24 : 32; // easier on touch
+      const minFlickDx = 12;
+      const vx = Math.abs(dx) / dt; // px/ms
+      const velocityThreshold = 0.4; // ~400 px/s
+
+      if (lock === 'x') {
         const angleDeg = Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI;
-        if (angleDeg <= 60) {
-          if (dx < 0) onNext?.(); else onPrev?.();
+        if (
+          Math.abs(dx) > baseThreshold ||
+          (vx > velocityThreshold && Math.abs(dx) > minFlickDx)
+        ) {
+          if (angleDeg <= 70) {
+            if (dx < 0) onNext?.(); else onPrev?.();
+          }
         }
       }
     }}
