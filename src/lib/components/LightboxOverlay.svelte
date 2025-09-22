@@ -14,9 +14,41 @@
   // Lock background scroll while open (client-only)
   $effect(() => {
     if (!browser) return;
-    document.documentElement.classList.add('overflow-hidden');
+
+    const body = document.body;
+    const html = document.documentElement;
+
+    // Cache current inline styles so we can restore precisely
+    const prev = {
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyWidth: body.style.width,
+      bodyOverflow: body.style.overflow,
+      htmlOverscroll: html.style.overscrollBehavior
+    };
+
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    // Robust iOS-friendly body scroll lock: fix body in place
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
+
+    // Prevent scroll chaining/rubber-banding out of the overlay
+    html.style.overscrollBehavior = 'contain';
+
     return () => {
-      document.documentElement.classList.remove('overflow-hidden');
+      // Restore previous styles and scroll position
+      body.style.position = prev.bodyPosition;
+      body.style.top = prev.bodyTop;
+      body.style.width = prev.bodyWidth;
+      body.style.overflow = prev.bodyOverflow;
+      html.style.overscrollBehavior = prev.htmlOverscroll;
+
+      // Restore scroll position
+      const y = Math.abs(parseInt((prev.bodyTop || '0').replace('px', ''), 10)) || scrollY;
+      window.scrollTo(0, y);
     };
   });
 
@@ -48,7 +80,7 @@
 
   <!-- Dialog container; clicking outside the figure closes -->
   <div
-    class="relative z-10 h-full w-full grid place-items-center p-4"
+    class="relative z-10 h-full w-full grid place-items-center p-4 touch-pan-x overscroll-none"
     role="dialog"
     aria-modal="true"
     tabindex="0"
@@ -79,6 +111,8 @@
       if (!(e.currentTarget as any)._dragging) return;
       (e.currentTarget as any)._dx = e.clientX - (e.currentTarget as any)._startX;
       (e.currentTarget as any)._dy = e.clientY - (e.currentTarget as any)._startY;
+      // Prevent default during drag to avoid background/page scroll on some browsers
+      e.preventDefault();
     }}
     onpointerup={(e) => {
       const el: any = e.currentTarget;
