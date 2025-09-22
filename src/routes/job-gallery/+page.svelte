@@ -16,11 +16,15 @@
 </script>
 
 <svelte:head>
-  <title>Gallery | Semper Finish</title>
+  <title>Job Gallery | Semper Finish</title>
   <meta name="description" content="A selection of our recent jobs and finishes." />
-  <meta property="og:title" content="Gallery | Semper Finish" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Job Gallery | Semper Finish" />
   <meta property="og:description" content="A selection of our recent jobs and finishes." />
-  <meta name="twitter:title" content="Gallery | Semper Finish" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Job Gallery | Semper Finish" />
   <meta name="twitter:description" content="A selection of our recent jobs and finishes." />
 </svelte:head>
 
