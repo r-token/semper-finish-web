@@ -13,6 +13,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "SlackBotToken": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "semper-finish": {
       "type": "sst.aws.SvelteKit"
       "url": string

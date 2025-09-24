@@ -18,12 +18,13 @@ export default $config({
   async run() {
     const isProd = $app.stage === "prod";
     const bookingApiSecret = new sst.Secret("BookingApiSecret");
+    const slackBotToken = new sst.Secret("SlackBotToken");
 
     const api = new sst.aws.ApiGatewayV2("BookingApi");
     api.route("POST /booking-request", {
       handler: "src/lib/server/booking-request.handler",
       runtime: "nodejs22.x",
-      link: [bookingApiSecret],
+      link: [bookingApiSecret, slackBotToken],
       permissions: [
         {
           actions: ["ses:SendEmail", "ses:SendRawEmail"],
@@ -35,6 +36,9 @@ export default $config({
         EMAIL_TO: isProd
           ? "ryantoken13@gmail.com,semperfinishllc@gmail.com"
           : "ryantoken13@gmail.com",
+        SLACK_BOOKING_REQUESTS_CHANNEL_ID: isProd
+          ? "C09HDCZU6TB" // booking-requests
+          : "C09GZLKFE14", // booking-requests-dev
       },
     });
 
