@@ -86,18 +86,32 @@
         onNext?.();
       }
     }}
-    onclick={(e) => { if (e.currentTarget === e.target) close(); }}
+    onclick={(e) => {
+      const el: any = e.currentTarget;
+      // If a swipe just occurred, suppress the synthetic click Chrome/Firefox dispatch
+      if (el._suppressClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        el._suppressClick = false;
+        return;
+      }
+      if (e.currentTarget === e.target) close();
+    }}
     onpointerdown={(e) => {
       // Track swipe start
       if (e.pointerType === 'mouse' && e.button !== 0) return;
       const el = e.currentTarget as HTMLElement & any;
-      el.setPointerCapture(e.pointerId);
+      // IMPORTANT: Do NOT capture on pointerdown; Chrome/Firefox will retarget the ensuing click
+      // to the capturing element, causing on:click|self close handlers to fire. We will capture
+      // only after we detect a horizontal swipe.
       el._startX = e.clientX;
       el._startY = e.clientY;
       el._dx = 0;
       el._dy = 0;
       el._dragging = true;
       el._lock = 'pending'; // 'pending' | 'x' | 'y'
+      el._captured = false;
+      el._suppressClick = false;
       el._t0 = e.timeStamp;
       el._pointer = e.pointerType;
     }}
@@ -117,6 +131,10 @@
         if (dist > slop) {
           const angleDeg = Math.atan2(absY, absX) * 180 / Math.PI; // 0 = horizontal
           el._lock = angleDeg <= 55 ? 'x' : 'y'; // more lenient horizontal window
+          if (el._lock === 'x' && !el._captured) {
+            // Capture only once we know it's a horizontal swipe to avoid click retargeting in Chromium/Gecko
+            try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); el._captured = true; } catch {}
+          }
         }
       }
 
@@ -128,12 +146,21 @@
     onpointerup={(e) => {
       const el: any = e.currentTarget;
       if (!el._dragging) return;
-      el._dragging = false;
+
+      // Release capture before click is dispatched so Chrome/Firefox don't retarget the click
+      try {
+        if ((e.currentTarget as HTMLElement).hasPointerCapture?.(e.pointerId)) {
+          (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+        }
+      } catch {}
+
       const dx = el._dx ?? 0;
       const dy = el._dy ?? 0;
       const lock = el._lock;
       const dt = Math.max((e.timeStamp - (el._t0 ?? e.timeStamp)), 1); // ms
-      el._dx = 0; el._dy = 0; el._lock = 'pending';
+
+      el._dragging = false;
+      el._dx = 0; el._dy = 0; el._lock = 'pending'; el._captured = false;
 
       const baseThreshold = (el._pointer === 'touch') ? 24 : 32; // easier on touch
       const minFlickDx = 12;
@@ -147,13 +174,23 @@
           (vx > velocityThreshold && Math.abs(dx) > minFlickDx)
         ) {
           if (angleDeg <= 70) {
+            // This is a valid swipe; perform navigation and suppress the next synthetic click
+            e.preventDefault();
             if (dx < 0) onNext?.(); else onPrev?.();
+            el._suppressClick = true;
+            // Auto-clear the suppression shortly in case no click is emitted
+            setTimeout(() => { try { el._suppressClick = false; } catch {} }, 300);
           }
         }
       }
     }}
     onpointercancel={(e) => {
-      const el: any = e.currentTarget; el._dragging = false; el._dx = 0; el._dy = 0; el._lock = 'pending';
+      try {
+        if ((e.currentTarget as HTMLElement).hasPointerCapture?.(e.pointerId)) {
+          (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+        }
+      } catch {}
+      const el: any = e.currentTarget; el._dragging = false; el._dx = 0; el._dy = 0; el._lock = 'pending'; el._captured = false; el._suppressClick = false;
     }}
   >
     <figure class="relative max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)]">
