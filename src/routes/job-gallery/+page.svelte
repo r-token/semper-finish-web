@@ -3,16 +3,15 @@
   import Heading from '$lib/components/Heading.svelte';
   import Spacer from '$lib/components/Spacer.svelte';
   import JobGallery from '$lib/components/JobGallery.svelte';
-  import { parseGalleryImages } from '$lib/utils/parseGalleryImages';
+  import { organizeImagesByJob, type GalleryImage } from '$lib/utils/parseGalleryImages';
 
-  // Load images for the first gallery (job1-gma), then parse/sort by label order and numeric index
-  const modules = import.meta.glob('$lib/assets/gallery/job1-gma/*.{jpg,jpeg,png,webp}', {
+  const modules = import.meta.glob('$lib/assets/gallery/job*/*.{jpg,jpeg,png,webp}', {
     eager: true,
     query: '?url',
     import: 'default'
   }) as Record<string, string>;
 
-  const gmaImages = parseGalleryImages(modules);
+  const allJobImages = organizeImagesByJob(modules);
 </script>
 
 <svelte:head>
@@ -32,5 +31,11 @@
   <Heading title="Job Gallery" lead="See examples of our work." />
   <Spacer />
 
-  <JobGallery title="2025 Job in Labadie, MO" images={gmaImages} />
+  {#if allJobImages['job2-stairwell']?.length > 0}
+    <JobGallery title="2025 Stairwell Job in St. Charles, MO" images={allJobImages['job2-stairwell']} />
+  {/if}
+
+  {#if allJobImages['job1-gma']?.length > 0}
+    <JobGallery title="2025 Garage Job in Labadie, MO" images={allJobImages['job1-gma']} />
+  {/if}
 </Section>

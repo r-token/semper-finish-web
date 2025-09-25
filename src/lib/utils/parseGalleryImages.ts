@@ -14,7 +14,32 @@ const ORDER: Record<GalleryLabel, number> = {
 // Matches: -before12., -prep2., -after., etc. Number is optional; defaults to 0 if missing
 const PARTS_RE = /-(before|prep|after)(\d*)\.(?:jpg|jpeg|png|webp)$/i;
 
-export function parseGalleryImages(modules: Record<string, string>): GalleryImage[] {
+// Organize images by job and parse them properly
+export function organizeImagesByJob(modules: Record<string, string>): Record<string, GalleryImage[]> {
+  // First, group the raw modules by job
+  const jobModules: Record<string, Record<string, string>> = {};
+  
+  Object.entries(modules).forEach(([path, url]) => {
+    const match = path.match(/\/gallery\/(job[^\/]+)\//);
+    if (match) {
+      const jobName = match[1];
+      if (!jobModules[jobName]) {
+        jobModules[jobName] = {};
+      }
+      jobModules[jobName][path] = url;
+    }
+  });
+  
+  // Then parse each job's images using parseGalleryImages
+  const jobImages: Record<string, GalleryImage[]> = {};
+  Object.entries(jobModules).forEach(([jobName, jobModuleSet]) => {
+    jobImages[jobName] = parseGalleryImages(jobModuleSet);
+  });
+  
+  return jobImages;
+}
+
+function parseGalleryImages(modules: Record<string, string>): GalleryImage[] {
   const items: (GalleryImage & { __order: number; __path: string; __idx: number })[] = [];
 
   for (const [path, url] of Object.entries(modules)) {
