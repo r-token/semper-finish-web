@@ -25,9 +25,9 @@
 
 <header class="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-neutral-800 dark:bg-neutral-950/80 dark:supports-[backdrop-filter]:bg-neutral-950/60">
   <div class="container-safe h-16 flex items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-3">
+    <a href="/" class="inline-flex items-center gap-3 px-3 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 no-underline">
       <img src="/logo.png" alt="Semper Finish" class="h-8 w-auto" />
-      <span class="sr-only">Semper Finish</span>
+      <span>Semper Finish</span>
     </a>
 
     <nav class="hidden md:flex items-center gap-1">
