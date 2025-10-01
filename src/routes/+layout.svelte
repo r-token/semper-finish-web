@@ -20,6 +20,39 @@
 
   <!-- Canonical URL -->
   <link rel="canonical" href={$page.url.href} />
+  
+  <!-- Structured data for site name -->
+  {@html `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Semper Finish",
+    "description": "Semper Finish delivers professional painting and handyman jobs to the St. Louis metro area.",
+    "url": "${$page.url.origin}"
+  }
+  </script>`}
+  
+  <!-- LocalBusiness structured data -->
+  {@html `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Semper Finish",
+    "description": "Professional painting and handyman services in the St. Louis metro area",
+    "url": "${$page.url.origin}",
+    "telephone": "+1-314-412-8368",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "St. Louis",
+      "addressRegion": "MO",
+      "addressCountry": "US"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "St. Louis"
+    }
+  }
+  </script>`}
 
   <!-- Open Graph defaults -->
   <meta property="og:site_name" content="Semper Finish" />
