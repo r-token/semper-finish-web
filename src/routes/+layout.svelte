@@ -8,8 +8,12 @@
 </script>
 
 <svelte:head>
-  <link rel="icon" type="image/png" href="/logo-noname.png" />
-  <link rel="apple-touch-icon" href="/logo-noname.png" />
+  <!-- Favicon and Apple Touch Icon; Google prefers 144x144 -->
+  <link rel="icon" type="image/png" sizes="144x144" href="/logo-noname-144.png" />
+  <link rel="icon" type="image/png" href="/logo-noname-144.png" /> <!-- fallback if `sizes` not supported -->
+  <link rel="icon" type="image/png" sizes="680x680" href="/logo-noname.png" />
+  <link rel="apple-touch-icon" sizes="680x680" href="/logo-noname.png" />
+  
   <!-- Light/dark theme-color for better address bar styling -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
@@ -21,12 +25,12 @@
   <meta property="og:site_name" content="Semper Finish" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={$page.url.href} />
-  <meta property="og:image" content="/logo.png" />
+  <meta property="og:image" content={$page.url.origin + '/logo.png'} />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter defaults -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="/logo.png" />
+  <meta name="twitter:image" content={$page.url.origin + '/logo.png'} />
 
   <!-- Robots -->
   <meta name="robots" content="index, follow" />
