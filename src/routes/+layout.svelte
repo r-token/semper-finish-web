@@ -85,7 +85,7 @@
   <footer class="border-t border-neutral-200 dark:border-neutral-800">
     <div class="container-safe py-6 text-sm text-neutral-600 dark:text-neutral-400 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <img src="/logo.png" alt="Semper Finish" class="h-2 w-auto" />
+        <img src="/logo.png" alt="Semper Finish" class="h-6 w-auto" />
         <span class="sr-only">Semper Finish</span>
       </div>
       <p class="m-0">© {new Date().getFullYear()} Semper Finish, LLC.</p>
