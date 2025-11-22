@@ -15,12 +15,15 @@ export default $config({
       },
     };
   },
+  
   async run() {
     const isProd = $app.stage === "prod";
     const bookingApiSecret = new sst.Secret("BookingApiSecret");
+    const testimonialApiSecret = new sst.Secret("TestimonialApiSecret");
     const slackBotToken = new sst.Secret("SlackBotToken");
 
     const api = new sst.aws.ApiGatewayV2("BookingApi");
+    
     api.route("POST /booking-request", {
       handler: "src/lib/server/booking-request.handler",
       runtime: "nodejs22.x",
@@ -41,11 +44,32 @@ export default $config({
           : "C09GZLKFE14", // booking-requests-dev
       },
     });
+    
+    api.route("POST /testimonial", {
+      handler: "src/lib/server/testimonial.handler",
+      runtime: "nodejs22.x",
+      link: [testimonialApiSecret, slackBotToken],
+      permissions: [
+        {
+          actions: ["ses:SendEmail", "ses:SendRawEmail"],
+          resources: ["*"]
+        }
+      ],
+      environment: {
+        EMAIL_FROM: "web@semperfinishllc.com",
+        EMAIL_TO: isProd
+          ? "ryantoken13@gmail.com,semperfinishllc@gmail.com"
+          : "ryantoken13@gmail.com",
+        SLACK_TESTIMONIALS_CHANNEL_ID: isProd
+          ? "C0A02Q1JUHW" // testimonials
+          : "C09ULDCGES2", // testimonials-dev
+      },
+    });
 
     new sst.aws.SvelteKit("semper-finish", {
-      link: [bookingApiSecret],
+      link: [bookingApiSecret, testimonialApiSecret],
       environment: {
-        BOOKING_API_URL: api.url
+        API_URL: api.url
       },
       domain: isProd
         ? {

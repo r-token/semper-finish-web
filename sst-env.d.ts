@@ -17,6 +17,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "TestimonialApiSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "semper-finish": {
       "type": "sst.aws.SvelteKit"
       "url": string

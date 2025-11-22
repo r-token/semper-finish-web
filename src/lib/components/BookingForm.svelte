@@ -32,7 +32,7 @@
 	</Prose>
 
 	{#key formKey}
-	<form method="POST" action={base + '/'} use:enhance={({ formElement }) => {
+	<form method="POST" action={base + '/?/submitBooking'} use:enhance={({ formElement }) => {
 		isSubmitting = true;
 		successMessage = '';
 		form = { ...form, error: undefined }; // reset any form errors
@@ -49,7 +49,7 @@
 				isSubmitting = false;
 			}
 		};
-	}} class="mt-6 space-y-4">
+		}} class="mt-6 space-y-4">
 			<!-- Anti-bot fields: honeypot, time-trap, and CSRF token -->
 			<input type="text" name="referrer" tabindex="-1" autocomplete="off" value="" aria-hidden="true"
 				style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" />
@@ -122,7 +122,7 @@
 				{#if isSubmitting}
 					Submitting...
 				{:else}
-					Submit
+					Submit Booking Request
 				{/if}
 			</button> 
 		</form>

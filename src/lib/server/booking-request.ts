@@ -52,8 +52,8 @@ export async function handler(event: { body?: string | null; headers?: Record<st
 // MARK: HELPER FUNCTIONS
 
 function sanitize(input: unknown, max = 5000) {
-  const s = typeof input === "string" ? input : "";
-  return s.trim().replace(/\s+/g, " ").replace(/[<>]/g, "").slice(0, max);
+  const str = typeof input === "string" ? input : "";
+  return str.trim().replace(/\s+/g, " ").replace(/[<>]/g, "").slice(0, max);
 }
 
 type Result<T> = { ok: true; data: T } | { ok: false; statusCode: number; body: string };
