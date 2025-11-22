@@ -32,11 +32,11 @@
   <Spacer />
   
   {#if allJobImages['job4-pundmann']?.length > 0}
-    <JobGallery title="2025 Sunroom Furniture Refinish" images={allJobImages['job4-pundmann']} />
+    <JobGallery title="2025 Sunroom Furniture Refinish in St. Charles, MO" images={allJobImages['job4-pundmann']} />
   {/if}
   
   {#if allJobImages['job3-patsy-howell']?.length > 0}
-    <JobGallery title="2025 Wall Paint Job" images={allJobImages['job3-patsy-howell']} />
+    <JobGallery title="2025 6-Room Repair/Repaint in Troy, MO" images={allJobImages['job3-patsy-howell']} />
   {/if}
 
   {#if allJobImages['job2-stairwell']?.length > 0}
