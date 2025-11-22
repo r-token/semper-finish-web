@@ -26,15 +26,34 @@
   <Heading title="Customer Testimony" lead="A few words from folks we've worked with." />
   <Spacer />
 
-  <Grid class="sm:grid-cols-2">
+  <Grid class="sm:grid-cols-2 items-start">
     <Card elevated>
       <Prose>
         <blockquote>
           <p>
-            Semper Finish exceeded our expectations. The attention to detail and professionalism were outstanding.
+            It’s incredible what a difference a fresh coat of paint can make — and Semper Finish nailed it! They
+            took our old, tired walls and made it look completely refreshed. You can tell they put real effort into
+            the prep and finishing details. The end result looks even better than I imagined. I’m so grateful for the
+            care and craftsmanship they brought to this project.
           </p>
         </blockquote>
-        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Jordan M.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Patsy H.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Drywall and taping repairs on damaged walls. Re-painting 6 areas.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: November 2025</p>
+      </Prose>
+    </Card>
+    
+    <Card elevated>
+      <Prose>
+        <blockquote>
+          <p>
+            I would definitely recommend Semper Finish to anyone looking for reliable, high-quality painting
+            and/or renovation work — they made the whole process easy and stress-free.
+          </p>
+        </blockquote>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Louise A.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Repair and repaint stairwell</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: October 2025</p>
       </Prose>
     </Card>
 
@@ -42,35 +61,13 @@
       <Prose>
         <blockquote>
           <p>
-            On time, on budget, and a flawless finish. We’ll be calling them again for our next project.
+            Nick's attention to detail was amazing! Next time I need a painter, I know who to call.
           </p>
         </blockquote>
-        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Riley S.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Carole T.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Refinished/repainted interior garage.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: September 2025</p>
       </Prose>
-    </Card>
-
-    <Card elevated>
-      <Prose>
-        <blockquote>
-          <p>
-            They made great recommendations, kept the site clean, and the results look fantastic in any light.
-          </p>
-        </blockquote>
-        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Casey A.</p>
-      </Prose>
-    </Card>
-
-    <Card elevated>
-      <div class="flex items-center justify-between gap-4">
-        <Prose>
-          <blockquote>
-            <p>
-              Clear communication from start to finish. Couldn’t be happier with the quality.
-            </p>
-          </blockquote>
-          <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Morgan T.</p>
-        </Prose>
-      </div>
     </Card>
   </Grid>
 </Section>
