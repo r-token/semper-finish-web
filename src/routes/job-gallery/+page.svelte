@@ -30,12 +30,20 @@
 <Section width="wide">
   <Heading title="Job Gallery" lead="See examples of our work." />
   <Spacer />
+  
+  {#if allJobImages['job4-pundmann']?.length > 0}
+    <JobGallery title="2025 Sunroom Furniture Refinish" images={allJobImages['job4-pundmann']} />
+  {/if}
+  
+  {#if allJobImages['job3-patsy-howell']?.length > 0}
+    <JobGallery title="2025 Wall Paint Job" images={allJobImages['job3-patsy-howell']} />
+  {/if}
 
   {#if allJobImages['job2-stairwell']?.length > 0}
-    <JobGallery title="2025 Stairwell Job in St. Charles, MO" images={allJobImages['job2-stairwell']} />
+    <JobGallery title="2025 Stairwell Paint Job in St. Charles, MO" images={allJobImages['job2-stairwell']} />
   {/if}
 
   {#if allJobImages['job1-gma']?.length > 0}
-    <JobGallery title="2025 Garage Job in Labadie, MO" images={allJobImages['job1-gma']} />
+    <JobGallery title="2025 Garage Paint Job in Labadie, MO" images={allJobImages['job1-gma']} />
   {/if}
 </Section>

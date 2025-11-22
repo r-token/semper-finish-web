@@ -51,18 +51,24 @@
   >
     {#each images as img, i}
       <li class="relative snap-start shrink-0" role="listitem">
-        <img
-          src={img.src}
-          alt={img.alt}
-          loading="lazy"
-          decoding="async"
-          class={`${tileWidth} ${tileHeight} object-cover rounded-lg border border-neutral-200 dark:border-neutral-800 select-none cursor-zoom-in`}
-          draggable="false"
+        <button
+          type="button"
+          class="block relative"
           onclick={() => open(i)}
-        />
+          onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } }}
+        >
+          <img
+            src={img.src}
+            alt={img.alt}
+            loading="lazy"
+            decoding="async"
+            class={`${tileWidth} ${tileHeight} object-cover rounded-lg border border-neutral-200 dark:border-neutral-800 select-none cursor-zoom-in`}
+            draggable="false"
+          />
 
-        <!-- Bottom-left label badge -->
-        <PhotoLabel label={img.label} class="pointer-events-none absolute left-1.5 bottom-1.5" />
+          <!-- Bottom-left label badge -->
+          <PhotoLabel label={img.label} class="pointer-events-none absolute left-1.5 bottom-1.5" />
+        </button>
       </li>
     {/each}
   </ul>
