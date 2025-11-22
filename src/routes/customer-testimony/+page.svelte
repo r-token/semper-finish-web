@@ -52,7 +52,7 @@
           </p>
         </blockquote>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Louise A.</p>
-        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Repair and repaint stairwell</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Repair and repaint stairwell.</p>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: October 2025</p>
       </Prose>
     </Card>
