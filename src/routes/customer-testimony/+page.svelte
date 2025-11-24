@@ -30,10 +30,7 @@
       <Prose>
         <blockquote>
           <p>
-            It’s incredible what a difference a fresh coat of paint can make — and Semper Finish nailed it! They
-            took our old, tired walls and made it look completely refreshed. You can tell they put real effort into
-            the prep and finishing details. The end result looks even better than I imagined. I’m so grateful for the
-            care and craftsmanship they brought to this project.
+            It’s incredible what a difference a fresh coat of paint can make — and Semper Finish nailed it! Nick was great and showed up when he said he would and completed the project in a timely manner. You can tell he put real effort into the prep and finishing details. The end result looks even better than I imagined. The price was very fair and will be calling again for any future projects. Thank you so much!
           </p>
         </blockquote>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Patsy H.</p>
@@ -46,8 +43,7 @@
       <Prose>
         <blockquote>
           <p>
-            I would definitely recommend Semper Finish to anyone looking for reliable, high-quality painting
-            and/or renovation work — they made the whole process easy and stress-free.
+            Your home will be in good hands with Semper Finish; I highly recommend them to anyone looking for reliable, high-quality painting and/or renovation work — they made the whole process easy and stress-free. Nick was great, letting me know exactly how it would be done and why, which is always assuring for a type A personality like myself. Thank you, Semper Finish!
           </p>
         </blockquote>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Louise A.</p>
