@@ -31,6 +31,10 @@
   <Heading title="Job Gallery" lead="See examples of our work." />
   <Spacer />
   
+  {#if allJobImages['job5-bathroom']?.length > 0}
+    <JobGallery title="2025 Bathroom Repair/Repaint" images={allJobImages['job5-bathroom']} />
+  {/if}
+  
   {#if allJobImages['job4-pundmann']?.length > 0}
     <JobGallery title="2025 Sunroom Furniture Refinish in St. Charles, MO" images={allJobImages['job4-pundmann']} />
   {/if}
