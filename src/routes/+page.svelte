@@ -25,10 +25,10 @@
 </svelte:head>
 
 <Section>
-	<Heading title="Professional painting and remodeling services across St. Louis, MO" />
+	<Heading title="Professional painting and remodeling services across St. Louis, MO" centered />
 	
 	<!-- Book With Us Button -->
-	<div class="mt-4 flex justify-start">
+	<div class="mt-4 flex justify-center">
 		<CTAButton onclick={() => bookingModalOpen = true}>
 			Book With Us
 		</CTAButton>
