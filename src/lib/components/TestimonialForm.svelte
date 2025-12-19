@@ -37,9 +37,14 @@
 </script>
 
 <div class="p-6">
-	<img src="/logo-full-width.png" alt="Semper Finish" class="w-full max-w-md mx-auto mt-4 mb-2" />
+	<picture>
+		<source srcset="/logo-full-width-dark.png" media="(prefers-color-scheme: dark)" />
+		<img src="/logo-full-width-light.png" alt="Semper Finish" class="w-full max-w-md mx-auto mt-4 mb-2" />
+	</picture>
+
+	<h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Customer Testimony</h2>
 	
-	<div class="mb-6 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
+	<div class="mb-6 text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
 		<p>Thank you for taking the time to share your experience with Semper Finish! Below are a few testimonial drafts written to capture different tones and project types. Please review each option and check the box next to the one you'd prefer, adding any edits or comments you'd like at the bottom. Or, you can choose to write your own! Then sign your approval to allow us to share your feedback publicly (website, social media, and marketing materials).</p>
 	</div>
 

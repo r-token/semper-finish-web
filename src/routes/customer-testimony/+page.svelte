@@ -6,6 +6,12 @@
   import Heading from '$lib/components/Heading.svelte';
   import Spacer from '$lib/components/Spacer.svelte';
   import Prose from '$lib/components/Prose.svelte';
+  import Modal from '$lib/components/Modal.svelte';
+  import TestimonialForm from '$lib/components/TestimonialForm.svelte';
+  import CTAButton from '$lib/components/CTAButton.svelte';
+
+  let { data, form } = $props();
+  let testimonialModalOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -23,6 +29,13 @@
 
 <Section>
   <Heading title="Customer Testimony" lead="A few words from folks we've worked with." />
+  
+  <div class="mt-4 flex justify-start">
+    <CTAButton onclick={() => testimonialModalOpen = true}>
+      Submit Testimonial
+    </CTAButton>
+  </div>
+  
   <Spacer />
 
   <Grid class="sm:grid-cols-2 items-start">
@@ -66,3 +79,7 @@
     </Card>
   </Grid>
 </Section>
+
+<Modal bind:open={testimonialModalOpen}>
+  <TestimonialForm {form} csrfToken={data?.csrfToken} onClose={() => testimonialModalOpen = false} />
+</Modal>

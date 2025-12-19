@@ -4,9 +4,10 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import Heading from '$lib/components/Heading.svelte';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import CTAButton from '$lib/components/CTAButton.svelte';
 
 	let { data, form } = $props();
+	let bookingModalOpen = $state(false);
 	let testimonialModalOpen = $state(false);
 </script>
 
@@ -24,25 +25,51 @@
 </svelte:head>
 
 <Section>
-	<!-- Responsive header: Heading on left, spacer, logo on right (stacks on small screens) -->
-	<div class="flex flex-col lg:flex-row items-start lg:items-center gap-4">
-		<div class="min-w-0">
-			<Heading title="Semper Finish" lead="Professional painting and handyman services across St. Louis, MO." />
-			<p class="text-neutral-600 dark:text-neutral-300 mt-2 leading-6">Woman-owned and veteran-operated, we bring painting and precision you can trust. Your home. Our honor.</p>
-			<button 
-				onclick={() => testimonialModalOpen = true}
-				class="bg-primary text-white rounded-md px-4 py-2 shadow-sm hover:brightness-95 transition mt-4"
-			>
-				Submit Testimonial
-			</button>
-		</div>
-		<div class="hidden lg:block flex-1"></div>
-		<img src="/logo.png" alt="Semper Finish" class="h-14 sm:h-16 lg:h-20 w-auto" />
+	<Heading title="Professional painting and remodeling services across St. Louis, MO" />
+	
+	<!-- Book With Us Button -->
+	<div class="mt-4 flex justify-start">
+		<CTAButton onclick={() => bookingModalOpen = true}>
+			Book With Us
+		</CTAButton>
 	</div>
 
-	<Spacer />
-	<BookingForm {form} csrfToken={data?.csrfToken} />
+	<!-- Hero Graphic -->
+	<div class="mt-12 mb-12 relative flex items-center justify-center">
+		<div class="relative w-full max-w-xl">
+			<!-- Logo -->
+			<img 
+				src="/logo.png" 
+				alt="Semper Finish Logo" 
+				class="w-full h-auto opacity-40 dark:opacity-30"
+			/>
+		</div>
+		<!-- Overlaid Text -->
+		<div class="absolute inset-0 flex items-center justify-center">
+			<h2 class="text-3xl sm:text-5xl font-black text-black dark:text-white text-center px-4">
+				YOUR HOME. OUR HONOR.
+			</h2>
+		</div>
+	</div>
+
+	<!-- Secondary Tagline -->
+	<div class="text-center">
+		<p class="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+			Woman-owned and veteran-operated, we bring painting and precision you can trust.
+		</p>
+	</div>
+
+	<!-- Submit Testimonial Button -->
+	<div class="mt-8 mb-8 flex justify-center">
+		<CTAButton onclick={() => testimonialModalOpen = true}>
+			Submit Testimonial
+		</CTAButton>
+	</div>
 </Section>
+
+<Modal bind:open={bookingModalOpen}>
+	<BookingForm {form} csrfToken={data?.csrfToken} onClose={() => bookingModalOpen = false} />
+</Modal>
 
 <Modal bind:open={testimonialModalOpen}>
 	<TestimonialForm {form} csrfToken={data?.csrfToken} onClose={() => testimonialModalOpen = false} />

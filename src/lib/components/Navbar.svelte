@@ -3,10 +3,10 @@
   import { page } from '$app/stores';
 
   const links = [
-    { href: '/', label: 'Home' },
-    { href: '/meet-the-team', label: 'Meet the Team' },
-    { href: '/customer-testimony', label: 'Customer Testimony' },
-    { href: '/job-gallery', label: 'Job Gallery' }
+    { href: '/', label: 'HOME' },
+    { href: '/meet-the-team', label: 'MEET THE TEAM' },
+    { href: '/customer-testimony', label: 'CUSTOMER TESTIMONY' },
+    { href: '/job-gallery', label: 'JOB GALLERY' }
   ];
 
   let pathname = $state('');
@@ -25,20 +25,17 @@
 </script>
 
 <header class="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-neutral-800 dark:bg-neutral-950/80 dark:supports-[backdrop-filter]:bg-neutral-950/60">
-  <div class="container-safe h-16 flex items-center justify-between gap-4">
-    <a href="/" class="inline-flex items-center gap-3 px-3 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 no-underline">
-      <img src="/logo.png" alt="Semper Finish" class="h-8 w-auto" />
-      <span>Semper Finish</span>
-    </a>
-
-    <nav class="hidden md:flex items-center gap-1">
+  <div class="container-safe h-16 flex items-center">
+    <nav class="hidden [@media(min-width:300px)]:flex items-center justify-between flex-1 gap-2">
       {#each links as link}
-        <NavLink href={link.href} active={pathname === link.href}>{link.label}</NavLink>
+        <div class="flex-1">
+          <NavLink href={link.href} active={pathname === link.href}>{link.label}</NavLink>
+        </div>
       {/each}
     </nav>
 
     <button
-      class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
+      class="[@media(min-width:350px)]:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
       aria-label={open ? 'Close menu' : 'Open menu'}
       aria-expanded={open}
       aria-controls="mobile-nav"
@@ -66,7 +63,7 @@
   <div
     id="mobile-nav"
     data-open={open}
-    class="md:hidden overflow-hidden border-t border-neutral-200 dark:border-neutral-800 transition-[grid-template-rows] duration-200 grid data-[open=true]:grid-rows-[1fr] grid-rows-[0fr]"
+    class="[@media(min-width:350px)]:hidden overflow-hidden border-t border-neutral-200 dark:border-neutral-800 transition-[grid-template-rows] duration-200 grid data-[open=true]:grid-rows-[1fr] grid-rows-[0fr]"
   >
     <div class="min-h-0">
       <nav class="container-safe py-2 flex flex-col">

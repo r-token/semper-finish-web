@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.css';
+  import Header from '$lib/components/Header.svelte';
   import Navbar from '$lib/components/Navbar.svelte';
   import { fade } from 'svelte/transition';
   import { page } from '$app/stores';
@@ -70,6 +71,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+  <Header />
   <Navbar />
 
   <main class="container-safe pb-4">
