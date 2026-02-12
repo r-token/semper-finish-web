@@ -43,11 +43,24 @@
       <Prose>
         <blockquote>
           <p>
+            Our Chesterfield Townhome had a major renovation roughly five years ago. There was a rush to finish at the time and so the last thing - the crown molding and painting - got less attention than probably needed. We had streaks, drips, gaps, etc. Some of these were in a large wrap around staircase that created heights of well over 20 feet above declining stairs - so not easily accessible. We hired Semper Finish to complete the job in a defined period of time while we were out of town. They touched every wall, fixed nail pops, sealed cracks, nailed crown molding and filled, and repainted the entire house. They had to cut samples to take to the paint store as we no longer had the paint in order to match colors. The house looks amazing and we could tell the care they took in prep as our home and all floors and furniture was clean let alone no drips anywhere. I can’t recommend Semper Finish enough for the care and professionalism they will bring to your project. 
+          </p>
+        </blockquote>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Eric T.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Whole-home repaint and other improvements.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: February 2026</p>
+      </Prose>
+    </Card>
+    
+    <Card elevated>
+      <Prose>
+        <blockquote>
+          <p>
             It’s incredible what a difference a fresh coat of paint can make — and Semper Finish nailed it! Nick was great and showed up when he said he would and completed the project in a timely manner. You can tell he put real effort into the prep and finishing details. The end result looks even better than I imagined. The price was very fair and will be calling again for any future projects. Thank you so much!
           </p>
         </blockquote>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">— Patsy H.</p>
-        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Drywall and taping repairs on damaged walls. Re-painting 6 areas.</p>
+        <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Project: Drywall and taping repairs on damaged walls. Repainting 6 areas.</p>
         <p class="m-0 text-sm text-neutral-600 dark:text-neutral-400">Date: November 2025</p>
       </Prose>
     </Card>
