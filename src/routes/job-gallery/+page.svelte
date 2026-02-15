@@ -31,6 +31,10 @@
   <Heading title="Job Gallery" lead="See examples of our work." />
   <Spacer />
   
+  {#if allJobImages['job6-chesterfield-interior']?.length > 0}
+    <JobGallery title="2025 Interior Repair/Repaint in Chesterfield, MO" images={allJobImages['job6-chesterfield-interior']} />
+  {/if}
+
   {#if allJobImages['job5-bathroom']?.length > 0}
     <JobGallery title="2025 Bathroom Repair/Repaint" images={allJobImages['job5-bathroom']} />
   {/if}
