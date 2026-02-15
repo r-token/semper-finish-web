@@ -37,8 +37,8 @@ export default $config({
       environment: {
         EMAIL_FROM: "booking@semperfinishllc.com",
         EMAIL_TO: isProd
-          ? "ryantoken13@gmail.com,semperfinishllc@gmail.com"
-          : "ryantoken13@gmail.com",
+          ? "ryan@ryantoken.com,semperfinishllc@gmail.com"
+          : "ryan@ryantoken.com",
         SLACK_BOOKING_REQUESTS_CHANNEL_ID: isProd
           ? "C09HDCZU6TB" // booking-requests
           : "C09GZLKFE14", // booking-requests-dev
@@ -58,8 +58,8 @@ export default $config({
       environment: {
         EMAIL_FROM: "web@semperfinishllc.com",
         EMAIL_TO: isProd
-          ? "ryantoken13@gmail.com,semperfinishllc@gmail.com"
-          : "ryantoken13@gmail.com",
+          ? "ryan@ryantoken.com,semperfinishllc@gmail.com"
+          : "ryan@ryantoken.com",
         SLACK_TESTIMONIALS_CHANNEL_ID: isProd
           ? "C0A02Q1JUHW" // testimonials
           : "C09ULDCGES2", // testimonials-dev
