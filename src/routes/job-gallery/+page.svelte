@@ -32,7 +32,7 @@
   <Spacer />
   
   {#if allJobImages['job6-chesterfield-interior']?.length > 0}
-    <JobGallery title="2025 Interior Repair/Repaint in Chesterfield, MO" images={allJobImages['job6-chesterfield-interior']} />
+    <JobGallery title="2026 Interior Repair/Repaint in Chesterfield, MO" images={allJobImages['job6-chesterfield-interior']} />
   {/if}
 
   {#if allJobImages['job5-bathroom']?.length > 0}

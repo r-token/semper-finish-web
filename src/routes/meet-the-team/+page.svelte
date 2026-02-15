@@ -14,6 +14,7 @@
   import nickAllisonDinner from '$lib/assets/meet-the-team/nick-allison-dinner.png';
   import nickAllisonNature from '$lib/assets/meet-the-team/nick-allison-nature.png';
   import nickWithFlag from '$lib/assets/meet-the-team/nick-with-flag.jpg';
+  import bryanReynolds from '$lib/assets/meet-the-team/bryan-reynolds.png';
 </script>
 
 <svelte:head>
@@ -30,11 +31,11 @@
 </svelte:head>
 
 <Section width="wide">
-  <Heading title="Meet the Team" lead="A power combo focused on solving problems for you and your family." />
+  <Heading title="Meet the Team" lead="Craftspeople dedicated to quality work for homes and businesses." />
 
   <Spacer />
 
-  <Grid class="sm:grid-cols-2 lg:grid-cols-3">
+  <Grid class="sm:grid-cols-2">
     <Card>
       <div class="space-y-4">
         <ImageBlock src={allisonHeadshot} alt="Allison Token - Owner & Co-founder" />
@@ -46,8 +47,17 @@
 
     <Card>
       <div class="space-y-4">
-        <ImageBlock src={nickHeadshot} alt="Nick Neidlinger - Vetern & Painter" />
+        <ImageBlock src={nickHeadshot} alt="Nick Neidlinger - Veteran & Painter" />
         <TextBlock title="Nicholas Neidlinger" lead="Veteran • Painter"></TextBlock>
+      </div>
+    </Card>
+  </Grid>
+
+  <Grid class="mt-6 sm:max-w-[calc(50%-0.75rem)]">
+    <Card>
+      <div class="space-y-4">
+        <ImageBlock src={bryanReynolds} alt="Bryan Reynolds - Painter" />
+        <TextBlock title="Bryan Reynolds" lead="Painter"></TextBlock>
       </div>
     </Card>
   </Grid>
