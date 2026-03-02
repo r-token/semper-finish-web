@@ -26,7 +26,7 @@ export default $config({
     
     api.route("POST /booking-request", {
       handler: "src/lib/server/booking-request.handler",
-      runtime: "nodejs22.x",
+      runtime: "nodejs24.x",
       link: [bookingApiSecret, slackBotToken],
       permissions: [
         {
@@ -47,7 +47,7 @@ export default $config({
     
     api.route("POST /testimonial", {
       handler: "src/lib/server/testimonial.handler",
-      runtime: "nodejs22.x",
+      runtime: "nodejs24.x",
       link: [testimonialApiSecret, slackBotToken],
       permissions: [
         {
@@ -67,6 +67,9 @@ export default $config({
     });
 
     new sst.aws.SvelteKit("semper-finish", {
+      server: {
+        runtime: "nodejs24.x",
+      },
       link: [bookingApiSecret, testimonialApiSecret],
       environment: {
         API_URL: api.url
